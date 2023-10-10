@@ -1,6 +1,6 @@
 # secMali
 capstone project
-- push를 할시에 누가 push하였는지 명시할 것 ex) #3 byy jsh
+- push를 할시에 누가 push하였는지 명시할 것 ex) #3 by jsh
 
 # 프론트엔드
 quasar framework 사용
