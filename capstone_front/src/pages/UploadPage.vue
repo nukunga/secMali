@@ -1,10 +1,10 @@
 <template>
-  <q-page class="q-pa-xl">
+  <q-page class="q-pa-xl" id="main">
     <p style="text-align: center">
     <img id="name" draggable="false" src="~assets\secmali_name.png" width="300">
     </p>
     <div id="explain" class="text-center text-h6">
-        의심러운 파일을 분석하여 악성코드 및 기타 침해를 탐지합니다.
+        의심스러운 파일을 분석하여 악성코드 및 기타 침해를 탐지합니다.
     </div>
     <div id="wrap">
       <div id='form_wrap'>
@@ -32,13 +32,14 @@ export default defineComponent({
 <style scoped>
 
 
-body, div, h1,h2, form, fieldset, input, textarea, footer,p {
+ div, form, fieldset, input, footer,p {
   margin: 0; padding: 0; border: 0; outline: none;
 }
 
-body {background: white; color: #7c7873;}
-p {text-shadow:0 1px 0 #fff; font-size:24px;}
-#wrap {width:530px; margin:20px auto 0; height:1000px;}
+#main {
+  background-color: #F7F8FF;
+}
+#wrap {width:530px; margin:20px auto 0; height:1000px; height: 580px;}
 
 #form_wrap { overflow:hidden; height:446px; position:relative; top:0px;
   -webkit-transition: all 1s ease-in-out .3s;
@@ -61,7 +62,7 @@ p {text-shadow:0 1px 0 #fff; font-size:24px;}
 #form_wrap:hover {height:776px;top:-200px;}
 
 form {background:white;
-  position:relative;top:200px;overflow:hidden;
+  position:relative;top:250px;overflow:hidden;
   height:200px;width:400px;margin:0px auto;padding:20px;
   border: 1px solid #fff;
   border-radius: 10px;
@@ -74,30 +75,7 @@ form {background:white;
   -o-transition: all 1s ease-in-out .3s;
   transition: all 1s ease-in-out .3s;}
 
-
 #form_wrap:hover form {height:530px;}
-
-label {
-  margin: 11px 20px 0 0;
-  font-size: 16px; color: #b3aba1;
-  text-transform: uppercase;
-  text-shadow: 0px 1px 0px #fff;
-}
-
-input[type=text], textarea {
-  font: 14px normal normal uppercase helvetica, arial, serif;
-  color: #7c7873;background:none;
-  width: 380px; height: 36px; padding: 0px 10px; margin: 0 0 10px 0;
-  border:1px solid #f8f5f1;
-  -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
-  -moz-box-shadow: inset 0px 0px 1px #726959;
-  -webkit-box-shadow:  inset 0px 0px 1px #b3a895;
-  box-shadow:  inset 0px 0px 1px #b3a895;
-}
-
-textarea { height: 80px; padding-top:14px;}
-
-textarea:focus, input[type=text]:focus {background:rgba(255,255,255,.35);}
 
 #form_wrap input[type=submit] {
   position:relative;
@@ -118,5 +96,13 @@ textarea:focus, input[type=text]:focus {background:rgba(255,255,255,.35);}
   -o-transition: opacity .5s ease-in-out 1.3s;
   transition: opacity .5s ease-in-out 1.3s;}
 
-#form_wrap:hover input:hover[type=submit] {color:#435c70;}
+#explain {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+#name {
+  margin-top: 50px;
+}
 </style>
