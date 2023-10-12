@@ -1,5 +1,7 @@
 from fastapi import FastAPI, UploadFile
 from typing import List
+import yara
+import olevba
 
 app = FastAPI()
 
