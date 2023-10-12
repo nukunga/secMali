@@ -4,6 +4,7 @@ import yara
 import olevba
 
 app = FastAPI()
+yara_rules = yara.compile("capstone_back\myapi\yaraRule\rules\maldocs_index.yar")
 
 @app.post("/analyze/")
 async def analyze_files(files: List[UploadFile]):
