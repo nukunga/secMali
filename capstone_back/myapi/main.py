@@ -5,12 +5,12 @@ from oletools.olevba import VBA_Parser
 app = FastAPI()
 
 # YARA 규칙 파일을 로드
-#rules = yara.compile('capstone_back\myapi\rules\maldocs_index.yar')
+rules = yara.compile('C:\\Users\\User\\Documents\\GitHub\\secMali\\capstone_back\\myapi\\rules\\maldocs_index.yar') 
 
 @app.post("/scan_document/")
 async def scan_document(file: UploadFile): # DB서버 연동하여 파일 가져오기
     content = await file.read()
-    
+
     # 파일을 YARA로 스캔
     yara_matches = rules.match(data=content)
 
