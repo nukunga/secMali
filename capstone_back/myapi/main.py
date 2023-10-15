@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 import yara
 import oletools.olevba
+import tempfile
 
 app = FastAPI()
 
@@ -15,8 +16,13 @@ async def create_upload_file(file: UploadFile = File(...)):
     # 매칭된 룰의 이름 추출
     matched_rules = [match.rule for match in matches]
     
+    # 임시 파일에 업로드된 파일 저장
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    temp_file.write(contents)
+    temp_file.close()
+    
     # Olevba를 사용하여 매크로 추출
-    vba = oletools.olevba.VBA_Parser(file.file, data=contents)
+    vba = oletools.olevba.VBA_Parser(temp_file.name)
     macros = []
     if vba.detect_vba_macros():
         for (filename, stream_path, vba_filename, vba_code) in vba.extract_macros():
