@@ -10,8 +10,10 @@ quasar framework 사용
 
 # 백엔드
 fastapi 사용
-- 파이썬 3.7이상 설치
+- 파이썬 3.11.5 사용
+- virtualenv = 20.24.5 사용
 - 가상환경 접속 후 pip로 fastapi uvicorn 설치
+- virtualenv myvenv --python=3.11.5
 - 실행 시 가상환경에서 접속 / activation
 - 종료 시 / deactivation
 <br/>
