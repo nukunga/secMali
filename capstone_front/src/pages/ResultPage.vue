@@ -40,12 +40,12 @@
   </div>
    </q-page>
 </template>
-  
+
   <script>
   import { defineComponent } from 'vue'
-  
+
   export default defineComponent({
-    name: 'ErrorNotFound'
+    name: 'ResultPage'
   })
   </script>
 <style scoped>
@@ -140,7 +140,7 @@ ul{
   text-align: left;
 }
 .tabmenu{
-  
+
   position:relative;
 }
 .tabmenu ul{
