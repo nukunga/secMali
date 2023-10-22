@@ -8,14 +8,14 @@
     </div>
     <div id="wrap">
       <div id='form_wrap'>
-        <form action="" enctype="multipart/form-data" method="post">
+        <form action="" enctype="multipart/form-data" method="post" @submit.prevent="uploadFile">
           <br>
           <div class="flex flex-center">
-          <input type="file" style="display : none;" name="uploadFile">
-          <img src="~assets/secmali_open.png" name="fileupload2" onclick="document.all.uploadFile.click(); document.all.uploadFile.value=document.all.fileupload2.value" width="370">
+            <input type="file" style="display : none;" id="uploadFile">
+            <img src="~assets/secmali_open.png" id="fileupload2" @click="document.getElementById('uploadFile').click()" width="370">
           </div>
           <br><br>
-          <input type="submit" name ="text" value="SecMali" style="color: #bbbee6; font-weight: bold; font-size: large"/>
+          <input type="submit" value="SecMali" style="color: #bbbee6; font-weight: bold; font-size: large"/>
         </form>
       </div>
     </div>
@@ -29,6 +29,9 @@ export default defineComponent({
   name: 'IndexPage'
 })
 </script>
+<script src="../router/upload.js">
+</script>
+
 <style scoped>
 
 
