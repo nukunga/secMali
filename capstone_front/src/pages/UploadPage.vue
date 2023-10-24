@@ -29,7 +29,7 @@ export default defineComponent({
   name: 'IndexPage'
 })
 </script>
-<script src="../router/upload.js">
+<script src="upload.js"> //경로 지정 
 </script>
 
 <style scoped>
