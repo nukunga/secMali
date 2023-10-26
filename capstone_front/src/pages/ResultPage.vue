@@ -6,8 +6,7 @@
     </p>
   </div>
   <div>
-    <div class="pie-chart pie-chart1" id="pie"><span class="center">100%</span></div>
-    <textarea id="one" style="resize: none;">파일명 :&#10;파일 확장자 : </textarea>
+    <div class="pie-chart pie-chart1" id="pie"><span class="center"></span></div>
   </div>
   <div class="tabmenu out-tabmenu" id="menu">
     <ul>
@@ -41,13 +40,6 @@
    </q-page>
 </template>
 
-  <script>
-  import { defineComponent } from 'vue'
-
-  export default defineComponent({
-    name: 'ResultPage'
-  })
-  </script>
 <style scoped>
 #sub {
   background-color: #F7F8FF;

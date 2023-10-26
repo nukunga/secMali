@@ -8,11 +8,11 @@
     </div>
     <div id="wrap">
       <div id='form_wrap'>
-        <form action="" enctype="multipart/form-data" method="post" @submit.prevent="uploadFile">
+        <form action="" enctype="multipart/form-data" method="post">
           <br>
           <div class="flex flex-center">
             <input type="file" style="display : none;" id="uploadFile">
-            <img src="~assets/secmali_open.png" id="fileupload2" @click="document.getElementById('uploadFile').click()" width="370">
+            <img src="~assets/secmali_open.png" id="fileupload2" width="370">
           </div>
           <br><br>
           <input type="submit" value="SecMali" style="color: #bbbee6; font-weight: bold; font-size: large"/>
@@ -22,15 +22,6 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'IndexPage'
-})
-</script>
-<script src="upload.js"> //경로 지정 
-</script>
 
 <style scoped>
 
