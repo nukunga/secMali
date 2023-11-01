@@ -1,22 +1,23 @@
 <template>
   <q-page class="q-pa-xl" id="main">
     <div id='wrap'>
-  <h1>SecMali</h1>
-  <div class='panel'>
-    <div class="h2">
-    <h2 class='dark' data-splitting='words'>Document <br>Analysis</h2>
+        <div class="hero-banner">
+    <div class="text-center preview-description">
+        <h1>SecMali</h1>
+			<small style="font-style: oblique">Document Analysis Program</small>
     </div>
-    <div class='file' style="max-width: 400px;">
-      <q-file filled bottom-slots v-model="model" label="Upload File" counter>
-        <template v-slot:prepend>
-          <q-icon name="cloud_upload" @click.stop.prevent />
-        </template>
-        <template v-slot:append>
-          <q-icon name="close" @click.stop.prevent="model = null" class="cursor-pointer" />
-        </template>
-      </q-file>
+</div>
+     <div class="file">
+        <q-uploader
+        url="http://localhost:4444/upload"
+        color="indigo-9"
+        accept=".hwp, .doc, .xlsx"
+        center
+        flat
+        bordered
+        style="width: 600px"
+      />
     </div>
-  </div>
 </div>
 
 <section class="">
@@ -75,12 +76,23 @@ export default {
 }
 </script>
 
+
 <style scoped>
-#q-pa-xl {
-  width: 100%;
+
+.hero-banner {
+    color: #131313;
+    text-align: center;
+    padding: 50px 0;
+    font-weight: bold;
 }
-* {
-    box-sizing: border-box;
+.preview-description h1 {
+    margin: 10px;
+    -webkit-text-fill-color: #383F6D;
+    -webkit-text-stroke: 3px #383F6D;
+    font-size: 55px;
+    font-family: 'Oxygen', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -4px;
 }
 
 html {
@@ -96,33 +108,19 @@ body {
   font-family: "Lexend Mega", sans-serif;
   pointer-events: none;
   max-width: 100%;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 0;
+  margin: 0;
 }
-
-/*본문 구조*/
-body #wrap {
-  width: 1000px;
-  max-width: 85vw;
-  margin: 0px auto;
-  padding: 50px;
-  position: relative;
-  box-sizing: border-box;
-}
-/*본문 구조*/
 
 /*secmali*/
 body #wrap h1 {
   text-align: center;
-  font-family: "Bogart-Semibold";
   font-size: 100px;
   position: relative;
   width: 100%;
   line-height: 1.2;
   padding: 10px 0;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #383F6D;
   font-weight: bold;
 }
@@ -141,81 +139,13 @@ body #wrap h1:before, body #wrap h1:after {
 }
 /*secmali 밑 줄*/
 
-/*본문내용*/
-body #wrap .panel {
-  position: relative;
-  width: 100%;
-  margin-bottom: 25vh;
-  max-height: 40vh;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/*Document Analysis*/
-body #wrap .panel h2 {
-  font-family: "Bogart-Semibold";
-  font-size: 64px;
-  position: relative;
-  z-index: 3;
-  color: #300264;
-  line-height: 1;
-  pointer-events: none;
-  font-weight: bold;
-}
-
-@media (min-width: 1000px) {
-  body #wrap .panel h2 {
-    grid-area: 3/1/4/5;
-    font-size: 82px;
-  }
-}
-
-/*Document Analysis*/
-body #wrap .panel .file {
-  grid-area: 2/3/5/6;
-  position: relative;
-}
-
-a {
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: none;
-}
-
-img {
-    max-width: 100%;
-}
+/*밑에 본문 가운데 정렬*/
 .container {
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
-
-header h1 {
-    font-size: 3rem;
-    margin: 0 0 1rem;
-}
-@media (max-width: 43.75em) {
-    header h1 {
-        font-size: 2rem;
-    }
-}
-header h2 {
-    font-weight: 300;
-    font-size: 1.5rem;
-    margin: 0 0 1rem;
-}
-@media (max-width: 43.75em) {
-    header h2 {
-        font-size: 1.5rem;
-    }
-}
+/*밑에 본문 가운데 정렬*/
 
 section {
     background: #3B527C;
@@ -320,5 +250,11 @@ section p {
 
 .text--left {
     text-align: left;
+}
+
+.file {
+    margin-top: 120px;
+    margin-bottom: 150px;
+    margin-left: 420px;
 }
 </style>
