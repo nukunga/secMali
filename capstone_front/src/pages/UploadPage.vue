@@ -1,102 +1,324 @@
 <template>
   <q-page class="q-pa-xl" id="main">
-    <p style="text-align: center">
-    <img id="name" draggable="false" src="~assets\secmali_name.png" width="300">
-    </p>
-    <div id="explain" class="text-center text-h6">
-        의심스러운 파일을 분석하여 악성코드 및 기타 침해를 탐지합니다.
+    <div id='wrap'>
+  <h1>SecMali</h1>
+  <div class='panel'>
+    <div class="h2">
+    <h2 class='dark' data-splitting='words'>Document <br>Analysis</h2>
     </div>
-    <div id="wrap">
-      <div id='form_wrap'>
-        <form action="" enctype="multipart/form-data" method="post">
-          <br>
-          <div class="flex flex-center">
-            <input type="file" style="display : none;" id="uploadFile">
-            <img src="~assets/secmali_open.png" id="fileupload2" width="370">
-          </div>
-          <br><br>
-          <input type="submit" value="SecMali" style="color: #bbbee6; font-weight: bold; font-size: large"/>
-        </form>
-      </div>
+    <div class='file' style="max-width: 400px;">
+      <q-file filled bottom-slots v-model="model" label="Upload File" counter>
+        <template v-slot:prepend>
+          <q-icon name="cloud_upload" @click.stop.prevent />
+        </template>
+        <template v-slot:append>
+          <q-icon name="close" @click.stop.prevent="model = null" class="cursor-pointer" />
+        </template>
+      </q-file>
     </div>
+  </div>
+</div>
+
+<section class="">
+    <div class="container">
+        <div class="col-7 details">
+            <h3>문서 열람 전 꼭 확인하세요!</h3>
+            <p>최근 몇 년간 악성 문서를 통한 피싱 범죄 비율이 기하급수적으로 늘고 있습니다. <br>문서 열람 전 미리 확인하여 문서에 어떤 매크로 코드가 포함되어 있는지 확인해보세요.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section--primary">
+    <div class="container">
+        <div class="col-3 features">
+            <i class="fa fa-bolt"></i>
+            <p>
+              <q-img src="~assets\secure.png" width="128px" id="pimg"></q-img><br><br><br>
+                악성 매크로 코드 분석 결과<br> 제공을 통한 보안 의식 강화
+            </p>
+        </div>
+        <div class="col-3 features">
+            <i class="fa fa-bank"></i>
+            <p>
+              <q-img src="~assets\order.png" width="150px"></q-img><br><br>
+                악성 매크로 코드가 <br>지시하는 명령을 자세하게 제공
+            </p>
+        </div>
+        <div class="col-3 features">
+            <i class="fa fa-heart"></i>
+            <p>
+              <q-img src="~assets\analysis.png" width="147px"></q-img><br><br>
+                비전공자도 입문하기 쉬운 형태로 <br>분석 자료 제공
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section--primary--alt">
+    <div class="container">
+        <h3>Test the safety of documents anytime, anywhere through the SecMali.</h3>
+        <p>Be sure to check the document before viewing it! We are no longer free from phishing attacks. <br>In recent years, the rate of phishing crimes through malicious documents has increased exponentially. <br>Check before viewing the document to see what macro code the document contains.</p>
+    </div>
+</section>
   </q-page>
 </template>
 
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup () {
+    return {
+      model: ref(null)
+    }
+  }
+}
+</script>
 
 <style scoped>
-
-
- div, form, fieldset, input, footer,p {
-  margin: 0; padding: 0; border: 0; outline: none;
+#q-pa-xl {
+  width: 100%;
+}
+* {
+    box-sizing: border-box;
 }
 
-#main {
-  background-color: #F7F8FF;
-}
-#wrap {width:530px; margin:20px auto 0; height:1000px; height: 580px;}
-
-#form_wrap { overflow:hidden; height:446px; position:relative; top:0px;
-  -webkit-transition: all 1s ease-in-out .3s;
-  -moz-transition: all 1s ease-in-out .3s;
-  -o-transition: all 1s ease-in-out .3s;
-  transition: all 1s ease-in-out .3s;}
-
-#form_wrap:before {content:"";
-  position:absolute;
-  bottom:128px;left:0px;
-  background:url('../assets/before.png');
-  width:530px;height: 316px;}
-
-#form_wrap:after {content:"";position:absolute;
-  bottom:0px;left:0;
-  background:url('../assets/after.png');
-  width:530px;height: 260px; }
-
-#form_wrap.hide:after, #form_wrap.hide:before {display:none; }
-#form_wrap:hover {height:776px;top:-200px;}
-
-form {background:white;
-  position:relative;top:250px;overflow:hidden;
-  height:200px;width:400px;margin:0px auto;padding:20px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-  -moz-border-radius: 3px; -webkit-border-radius: 3px;
-  box-shadow: 0px 0px 3px #9d9d9d, inset 0px 0px 27px #fff;
-  -moz-box-shadow: 0px 0px 3px #9d9d9d, inset 0px 0px 14px #fff;
-  -webkit-box-shadow: 0px 0px 3px #9d9d9d, inset 0px 0px 27px #fff;
-  -webkit-transition: all 1s ease-in-out .3s;
-  -moz-transition: all 1s ease-in-out .3s;
-  -o-transition: all 1s ease-in-out .3s;
-  transition: all 1s ease-in-out .3s;}
-
-#form_wrap:hover form {height:530px;}
-
-#form_wrap input[type=submit] {
-  position:relative;
-  font-size:24px; color: #7c7873;text-shadow:0 1px 0 #fff;
-  width:100%; text-align:center;opacity:0;
-  background:none;
-  cursor: pointer;
-  -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
-  -webkit-transition: opacity .6s ease-in-out 0s;
-  -moz-transition: opacity .6s ease-in-out 0s;
-  -o-transition: opacity .6s ease-in-out 0s;
-  transition: opacity .6s ease-in-out 0s;
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-#form_wrap:hover input[type=submit] {z-index:1;opacity:1;
-  -webkit-transition: opacity .5s ease-in-out 1.3s;
-  -moz-transition: opacity .5s ease-in-out 1.3s;
-  -o-transition: opacity .5s ease-in-out 1.3s;
-  transition: opacity .5s ease-in-out 1.3s;}
+body {
+  scroll-behavior: smooth;
+  background: white;
+  font-family: "Lexend Mega", sans-serif;
+  pointer-events: none;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+}
 
-#explain {
-  margin-top: 50px;
-  margin-bottom: 30px;
+/*본문 구조*/
+body #wrap {
+  width: 1000px;
+  max-width: 85vw;
+  margin: 0px auto;
+  padding: 50px;
+  position: relative;
+  box-sizing: border-box;
+}
+/*본문 구조*/
+
+/*secmali*/
+body #wrap h1 {
+  text-align: center;
+  font-family: "Bogart-Semibold";
+  font-size: 100px;
+  position: relative;
+  width: 100%;
+  line-height: 1.2;
+  padding: 10px 0;
+  overflow: hidden;
+  margin-bottom: 10px;
+  color: #383F6D;
+  font-weight: bold;
+}
+/*secmali*/
+
+/*secmali 밑 줄*/
+body #wrap h1:before, body #wrap h1:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background: #383F6D;
+  z-index: 2;
+}
+/*secmali 밑 줄*/
+
+/*본문내용*/
+body #wrap .panel {
+  position: relative;
+  width: 100%;
+  margin-bottom: 25vh;
+  max-height: 40vh;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/*Document Analysis*/
+body #wrap .panel h2 {
+  font-family: "Bogart-Semibold";
+  font-size: 64px;
+  position: relative;
+  z-index: 3;
+  color: #300264;
+  line-height: 1;
+  pointer-events: none;
   font-weight: bold;
 }
 
-#name {
-  margin-top: 50px;
+@media (min-width: 1000px) {
+  body #wrap .panel h2 {
+    grid-area: 3/1/4/5;
+    font-size: 82px;
+  }
+}
+
+/*Document Analysis*/
+body #wrap .panel .file {
+  grid-area: 2/3/5/6;
+  position: relative;
+}
+
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+.container {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0 0 1rem;
+}
+@media (max-width: 43.75em) {
+    header h1 {
+        font-size: 2rem;
+    }
+}
+header h2 {
+    font-weight: 300;
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+}
+@media (max-width: 43.75em) {
+    header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+section {
+    background: #3B527C;
+    color: white;
+    padding: 3.5rem 0;
+}
+@media (max-width: 43.75em) {
+    section {
+        padding: 2rem 0;
+    }
+}
+section.section--primary {
+    background: #E2F0FF;
+    color: black;
+}
+section.section--primary--alt {
+    background: white;
+    color: black;
+}
+
+section h3 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 1rem;
+}
+
+@media (max-width: 43.75em) {
+    section h3 {
+        font-size: 1.5rem;
+    }
+}
+section li {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+section p {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.col, .col-5, .col-3, .col-7 {
+    margin: 0 1.5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.col-7 {
+    width: 64%;
+}
+@media (max-width: 43.75em) {
+    .col-7 {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.col-3 {
+    width: 29%;
+}
+@media (max-width: 43.75em) {
+    .col-3 {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.col-5 {
+    width: 30%;
+}
+@media (max-width: 34.375em) {
+    .col-5 {
+        width: 60%;
+        margin: 0;
+    }
+}
+
+.details {
+    text-align: center;
+}
+.details h3 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+
+.features {
+    text-align: center;
+    padding: 1rem;
+}
+
+.features p {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.text--center {
+    text-align: center;
+}
+
+.text--left {
+    text-align: left;
 }
 </style>

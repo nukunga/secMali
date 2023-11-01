@@ -2,7 +2,7 @@
    <q-page id="sub">
     <div>
     <p style="text-align: center">
-    <img id="subname" width="200" draggable="false" src="~assets\secmali_name.png">
+    <img id="subname" width="200" draggable="false" src="~assets\analysis.png">
     </p>
   </div>
   <div>
