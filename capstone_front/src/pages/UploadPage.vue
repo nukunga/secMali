@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-xl" id="main">
+  <q-page id="main">
     <div id='wrap'>
         <div class="hero-banner">
     <div class="text-center preview-description">
@@ -7,15 +7,14 @@
 			<small style="font-style: oblique">Document Analysis Program</small>
     </div>
 </div>
-     <div class="file">
+     <div class="flex flex-center">
         <q-uploader
         url="http://localhost:4444/upload"
         color="indigo-9"
         accept=".hwp, .doc, .xlsx"
-        center
         flat
         bordered
-        style="width: 600px"
+        style="width: 600px; margin-top:150px; margin-bottom:150px"
       />
     </div>
 </div>
@@ -107,7 +106,7 @@ body {
   background: white;
   font-family: "Lexend Mega", sans-serif;
   pointer-events: none;
-  max-width: 100%;
+  width: 100%;
   margin: 0;
 }
 
@@ -141,7 +140,7 @@ body #wrap h1:before, body #wrap h1:after {
 
 /*밑에 본문 가운데 정렬*/
 .container {
-    margin: 0 auto;
+    margin: 0;
     width: 100%;
     text-align: center;
 }
@@ -169,7 +168,7 @@ section.section--primary--alt {
 section h3 {
     text-align: center;
     font-size: 2rem;
-    font-weight: 500;
+    font-weight: 700;
     margin: 0 0 1rem;
 }
 
@@ -252,9 +251,4 @@ section p {
     text-align: left;
 }
 
-.file {
-    margin-top: 120px;
-    margin-bottom: 150px;
-    margin-left: 420px;
-}
 </style>
