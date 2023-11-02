@@ -9,7 +9,7 @@
        <div class="flex flex-center">
     <q-splitter
       v-model="splitterModel"
-      style="height: 700px; width: 90%;"
+      style="height: 500px; width: 90%;"
     >
 
       <template v-slot:before>
