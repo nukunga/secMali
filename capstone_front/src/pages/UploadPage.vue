@@ -1,5 +1,5 @@
 <template>
-  <q-page id="main">
+  <q-page id="main" class="scroll">
     <div id='wrap'>
         <div class="hero-banner">
     <div class="text-center preview-description">
@@ -26,48 +26,6 @@
     </div>
   </div>
 </div>
-
-<section class="">
-    <div class="container">
-        <div class="col-7 details">
-            <h3>문서 열람 전 꼭 확인하세요!</h3>
-            <p>최근 몇 년간 악성 문서를 통한 피싱 범죄 비율이 기하급수적으로 늘고 있습니다. <br>문서 열람 전 미리 확인하여 문서에 어떤 매크로 코드가 포함되어 있는지 확인해보세요.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section--primary">
-    <div class="container">
-        <div class="col-3 features">
-            <i class="fa fa-bolt"></i>
-            <p>
-              <q-img src="~assets\secure.png" width="128px" id="pimg"></q-img><br><br><br>
-                악성 매크로 코드 분석 결과<br> 제공을 통한 보안 의식 강화
-            </p>
-        </div>
-        <div class="col-3 features">
-            <i class="fa fa-bank"></i>
-            <p>
-              <q-img src="~assets\order.png" width="150px"></q-img><br><br>
-                악성 매크로 코드가 <br>지시하는 명령을 자세하게 제공
-            </p>
-        </div>
-        <div class="col-3 features">
-            <i class="fa fa-heart"></i>
-            <p>
-              <q-img src="~assets\analysis.png" width="147px"></q-img><br><br>
-                비전공자도 입문하기 쉬운 형태로 <br>분석 자료 제공
-            </p>
-        </div>
-    </div>
-</section>
-
-<section class="section--primary--alt">
-    <div class="container">
-        <h3>Test the safety of documents anytime, anywhere through the SecMali.</h3>
-        <p>Be sure to check the document before viewing it! We are no longer free from phishing attacks. <br>In recent years, the rate of phishing crimes through malicious documents has increased exponentially. <br>Check before viewing the document to see what macro code the document contains.</p>
-    </div>
-</section>
   </q-page>
 </template>
 
@@ -85,11 +43,8 @@ export default {
 
 <style scoped>
 
-.hero-banner {
-    color: #131313;
-    text-align: center;
-    padding: 50px 0;
-    font-weight: bold;
+.scroll {
+    overflow: hidden;
 }
 .preview-description h1 {
     margin: 10px;
@@ -114,7 +69,9 @@ body {
   font-family: "Lexend Mega", sans-serif;
   pointer-events: none;
   width: 100%;
+  height: auto;
   margin: 0;
+
 }
 
 /*secmali*/
@@ -148,126 +105,14 @@ body #wrap h1:before, body #wrap h1:after {
 }
 /*secmali 밑 줄*/
 
-/*밑에 본문 가운데 정렬*/
-.container {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-}
-/*밑에 본문 가운데 정렬*/
 
-section {
-    background: #3B527C;
-    color: white;
-    padding: 3.5rem 0;
-}
-@media (max-width: 43.75em) {
-    section {
-        padding: 2rem 0;
-    }
-}
-section.section--primary {
-    background: #E2F0FF;
-    color: black;
-}
-section.section--primary--alt {
-    background: white;
-    color: black;
-}
-
-section h3 {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0 0 1rem;
-}
-
-@media (max-width: 43.75em) {
-    section h3 {
-        font-size: 1.5rem;
-    }
-}
-section li {
-    font-size: 1.2rem;
-    font-weight: 300;
-}
-section p {
-    font-size: 1.2rem;
-    font-weight: 300;
-}
-
-.col, .col-5, .col-3, .col-7 {
-    margin: 0 1.5%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.col-7 {
-    width: 64%;
-}
-@media (max-width: 43.75em) {
-    .col-7 {
-        width: 100%;
-        margin: 0;
-        text-align: center;
-    }
-}
-
-.col-3 {
-    width: 29%;
-}
-@media (max-width: 43.75em) {
-    .col-3 {
-        width: 100%;
-        margin: 0;
-    }
-}
-
-.col-5 {
-    width: 30%;
-}
-@media (max-width: 34.375em) {
-    .col-5 {
-        width: 60%;
-        margin: 0;
-    }
-}
-
-.details {
-    text-align: center;
-}
-.details h3 {
-    font-size: 2rem;
-    text-align: center;
-}
-
-
-.features {
-    text-align: center;
-    padding: 1rem;
-}
-
-.features p {
-    margin: 0 0 1rem 0;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.text--center {
-    text-align: center;
-}
-
-.text--left {
-    text-align: left;
-}
-
-body, div, h1,h2, form, fieldset, input, textarea, footer,p {
+    body, div, h1,h2, form, fieldset, input, textarea, footer,p {
       margin: 0; padding: 0; border: 0; outline: none;
     }
 
     body {background: white; color: #7c7873;}
     p {text-shadow:0 1px 0 #fff; font-size:24px;}
-    #wrap1 {width:530px; margin:20px auto 0; height:1000px;}
+    #wrap1 {width:530px; margin:20px auto 0;}
 
     input[type=text], textarea {
       font: 14px normal normal uppercase helvetica, arial, serif;
@@ -282,9 +127,9 @@ body, div, h1,h2, form, fieldset, input, textarea, footer,p {
 
     textarea { height: 80px; padding-top:14px;}
 
-textarea:focus, input[type=text]:focus {background:rgba(255,255,255,.35);}
+    textarea:focus, input[type=text]:focus {background:rgba(255,255,255,.35);}
 
-#form_wrap input[type=submit] {
+    #form_wrap input[type=submit] {
       position:relative;
       font-size:24px; color: #7c7873;text-shadow:0 1px 0 #fff;
       width:100%; text-align:center;opacity:0;

