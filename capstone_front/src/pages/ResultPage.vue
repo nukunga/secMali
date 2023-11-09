@@ -9,8 +9,8 @@
     </div>
       <div id='wrap' class="flex flex-center">
         <img class="img" src="~assets/love-letter.png" style="width: 60px;">
-        <div class="text-h5 q-mb-md font">
-          <p><br>  분석된 파일이 도착했습니다.</p>
+        <div class="text-h5 q-mb-md font3">
+          <p><br><b>분석된 파일이 도착했습니다.</b></p>
         </div>
         <div class="box">
           <div class="title">
@@ -33,26 +33,14 @@
 </template>
 
 <style scoped>
-#header {
-  margin: 0 auto;
-  background-color: #383f6d;
-}
-.hero-banner {
-  width: 98%;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
 .preview-description h1 {
     margin: 10px;
-    -webkit-text-fill-color: white;
-    -webkit-text-stroke: 3px white;
+    -webkit-text-fill-color: #383f6d;
+    -webkit-text-stroke: 6px #383f6d;
     font-size: 55px;
     font-family: 'Oxygen', sans-serif;
     text-transform: uppercase;
-    letter-spacing: -4px;
+    letter-spacing: -3px;
 }
 
 body #wrap h1 {
@@ -61,7 +49,7 @@ body #wrap h1 {
   width: 100%;
   line-height: 1.2;
   padding: 10px 0;
-  color: white;
+  color: #383f6d;
   font-weight: bold;
 }
 
@@ -112,5 +100,8 @@ body #wrap h1 {
   font-family: 'IBM Plex Mono';
 }
 
+.font3 {
+  font-family: 'Nanum Myeongjo';
+}
 
 </style>
