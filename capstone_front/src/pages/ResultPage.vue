@@ -1,27 +1,31 @@
 <template>
-
    <q-page id="sub">
-      <div id='wrap' class="flex-container flex flex-center">
+      <div class="wrap">
+        <div class="wrap-inner">
+          <div class="wrap-title flex-container flex flex-center">
         <q-btn dense color="blue" round icon="email" class="q-ml-md img">
           <q-badge color="red" floating>1</q-badge>
         </q-btn>
         <div class="text-h4 q-mb-md font3">
-          <p class="color"><b>파일 분석 완료!</b></p>
+          <p class="color title"><b>파일 분석 완료!</b></p>
         </div>
-      </div>
-      <div class="fixed-botton-center down-container">
+        </div>
         <div>
-        <p class="sc-text text-h6 q-mb-md">scroll down</p>
-        </div>
-        <img class="img2" src="~assets/down.png" style="width: 80px;">
+        <div class="fixed-botton-center down-container">  
+        <a href="#" style="color: white;" class="sd">Scroll Down</a>
+        <div> 
       </div>
-  
+      </div>
+      </div>
+      </div>
+      </div>
+      <div class="content clearfix">
       <div class="flex flex-center con-container">
         <div class="box">
           <div class="text-center preview-description fixed-top-center" style="background-color:#e8eaf6;">
          <h1 style="background-color: #e8eaf6;">SecMali REPORT</h1>
         </div>
-          <div class="title" style="background-color: #e8eaf6;">
+          <div class="title1" style="background-color: #e8eaf6;">
             <p class="text-h5 q-mb-md font" style="font-weight: bold; background-color: #e8eaf6;">RE: secmali 예시 파일.hwp</p>
             <p class="text-h6 q-mb-md font" style="font-weight: 400; background-color: #e8eaf6;">보낸사람 secmali@secure.com</p>
           </div>
@@ -39,9 +43,9 @@
         <q-btn class="btn" text-color="white" style="font-weight: bold;" label="파일 더 분석하기" />
       </div>
   </div>
+</div>
    </q-page>
 </template>
-
 
 <style scoped>
 
@@ -100,10 +104,44 @@
   justify-content: center; /* 수평 정렬 */
 
   flex-direction: column;
-  
-  
 }
 
+.wrap {
+  position: fixed;
+  z-index: 9;
+  transition: all 1.6s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.wrap.scrolled {
+  transform: translate3d(0, -100%, 0) scale(.75);
+  opacity: 0;
+}
+
+.wrap-inner {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+}
+
+.title {
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+a {
+  text-decoration-line: none;
+}
+.wrap-title {
+  display: table-cell;
+  vertical-align: middle; 
+  text-align: center;
+}
+
+.wrap {
+  overflow: hidden;
+  z-index: 1;
+}
 .down-container {
 
   display: -webkit-box; 
@@ -124,6 +162,23 @@
   flex-direction: column;
 }
 
+.content {
+  position: relative;
+  background-color: #fff;
+  border-top: 10px solid black;
+  padding: 0; 
+  margin: 0;
+  transition: all 1.6s cubic-bezier(0.86, 0, 0.07, 1);
+  transform: translate3d(0, 20px, 0) scale(.75);
+  opacity: 0;
+}
+
+.content.scrolled {
+  transform: translate3d(0, 0, 0) scale(1); 
+  opacity: 1;
+}
+
+
 .sc-text {
   color: white;
   font-weight: bozz;
@@ -140,6 +195,17 @@
     margin-bottom: 50px;
 } 
 
+.sd {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sd:hover, .sd:focus {
+  opacity: .7;
+  text-decoration: none;
+}
 .box {
   outline: black 1px solid;
   height: max-content;
@@ -149,7 +215,7 @@
   background-color: #e8eaf6;
 }
 
-.title {
+.title1 {
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
@@ -185,6 +251,11 @@
 
 .font3 {
   font-family: 'Nanum Myeongjo';
+}
+
+.wrap {
+  overflow: hidden;
+	z-index: 1;
 }
 
 </style>
