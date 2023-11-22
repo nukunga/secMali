@@ -13,7 +13,7 @@
         <div>
           <div class="fixed-botton-center down-container">
             <q-btn
-              @click="addScrolled"
+              @click="addScrolledClass"
               text-color="white"
               flat
               class="sd text-lowercase"
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="content clearfix">
+    <div ref="contentElement" class="content clearfix">
       <div class="flex flex-center con-container">
         <div class="box">
           <div
@@ -142,15 +142,19 @@ export default defineComponent({
   name: "ResultPage",
   setup() {
     const wrapElement = ref(null);
+    const contentElement = ref(null);
 
-    function addScrolled() {
-      const element = document.querySelector(".wrap, .content");
-      element.classList.add("scrolled");
+    function addScrolledClass() {
+      wrapElement.value.classList.add('scrolled');
+      contentElement.value.classList.add('scrolled');
+
+      console.log(wrapElement.value.classList, contentElement.value.classList);
     }
 
     function handleMouseWheelWrap(e) {
-      if (e.deltaY < 0) {
+      if (e.deltaY > 0) {
         wrapElement.value.classList.add("scrolled");
+        contentElement.value.classList.add('scrolled');
         e.preventDefault();
         return false;
       }
@@ -158,8 +162,9 @@ export default defineComponent({
 
     function handleMouseWheelWindow(e) {
       if (wrapElement.value.classList.contains("scrolled")) {
-        if (window.scrollY === 0 && e.deltaY > 0) {
+        if (window.scrollY === 0 && e.deltaY < 0) {
           wrapElement.value.classList.remove("scrolled");
+          contentElement.value.classList.remove("scrolled");
         }
       }
     };
@@ -171,12 +176,14 @@ export default defineComponent({
 
     onUnmounted(() => {
       wrapElement.value.removeEventListener("wheel", handleMouseWheelWrap);
+      contentElement.value.removeEventListener("wheel", handleMouseWheelWrap);
       window.removeEventListener("wheel", handleMouseWheelWindow);
     });
 
     return {
-      addScrolled,
-      wrapElement
+      addScrolledClass,
+      wrapElement,
+      contentElement
     };
   },
 });
