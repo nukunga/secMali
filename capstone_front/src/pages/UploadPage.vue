@@ -31,11 +31,73 @@
 
 <script>
 import { ref } from 'vue'
+import axios from 'axios'
+import { useStorage } from 'quasar'
+import { getFirestore, collection, addDoc, getDoc, doc } from 'firebase/firestore'
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 export default {
-  setup () {
+  setup() {
+    const model = ref(null)
+    const uploadUrl = 'http://localhost:4444/upload' // 백엔드 업로드 API URL
+
+    const uploadFile = async () => {
+      if (!model) {
+        console.error('No file selected')
+        return
+      }
+
+      // 파일 업로드
+      const storage = useStorage()
+      const file = model[0]
+
+      // Firebase Storage에 업로드
+      const storageRef = storageRef(getStorage(), `uploads/${file.name}`)
+      await uploadBytes(storageRef, file)
+
+      // Firebase Storage에서 다운로드 URL 얻기
+      const downloadURL = await getDownloadURL(storageRef)
+
+      // Firebase Firestore에 파일 정보 저장
+      const db = getFirestore()
+      const fileCollection = collection(db, 'files')
+
+      try {
+        const docRef = await addDoc(fileCollection, {
+          fileName: file.name,
+          downloadURL: downloadURL, // 업로드된 파일의 다운로드 URL
+          timestamp: new Date()
+        })
+
+        // docRef.id를 이용하여 해당 문서의 ID를 얻을 수 있음
+        const documentId = docRef.id
+
+        // documentId를 사용하여 백엔드 API 호출
+        callBackendAPI(documentId)
+      } catch (error) {
+        console.error('Error adding document: ', error)
+      }
+    }
+
+    const callBackendAPI = async (documentId) => {
+      // 프론트엔드에서 백엔드 API 호출
+      try {
+        const response = await axios.post('13.209.77.71:8000/uploadfile', {
+          documentId: documentId
+        })
+
+        // API 호출 성공 시의 로직
+        console.log('Backend API response:', response.data)
+      } catch (error) {
+        // API 호출 실패 시의 로직
+        console.error('Error calling backend API: ', error)
+      }
+    }
+
     return {
-      model: ref(null)
+      model,
+      uploadFile,
+      uploadUrl
     }
   }
 }
