@@ -13,12 +13,14 @@
         <br>
         <div class="flex flex-center">
         <q-uploader
+        ref="uploader"
         url="http://localhost:4444/upload"
         color="indigo-9"
         accept=".hwp, .doc, .xlsx"
         flat
         bordered
         style="width: 600px; margin-top:100px; margin-bottom: 20px;"
+        @added="uploadFile"
       />
     </div>
     <p style="text-align: center; font-size: medium;"><b>Drag & drop</b> file here <br>or <b>browse file</b> from device</p>
@@ -30,74 +32,34 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import axios from 'axios'
-import { useStorage } from 'quasar'
-import { getFirestore, collection, addDoc, getDoc, doc } from 'firebase/firestore'
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
+import firebase from 'firebase/app'
+import 'firebase/storage'
+import 'firebase/firestore'
 
 export default {
-  setup() {
-    const model = ref(null)
-    const uploadUrl = 'http://localhost:4444/upload' // 백엔드 업로드 API URL
+  methods: {
+    async uploadFile () {
+      const file = this.$refs.uploader.queuedFiles[0]
+      if (!file) return
 
-    const uploadFile = async () => {
-      if (!model) {
-        console.error('No file selected')
-        return
-      }
-
-      // 파일 업로드
-      const storage = useStorage()
-      const file = model[0]
-
-      // Firebase Storage에 업로드
-      const storageRef = storageRef(getStorage(), `uploads/${file.name}`)
-      await uploadBytes(storageRef, file)
-
-      // Firebase Storage에서 다운로드 URL 얻기
-      const downloadURL = await getDownloadURL(storageRef)
+      // Firebase Storage에 파일 업로드
+      const storageRef = firebase.storage().ref()
+      const fileRef = storageRef.child(file.name)
+      await fileRef.put(file)
 
       // Firebase Firestore에 파일 정보 저장
-      const db = getFirestore()
-      const fileCollection = collection(db, 'files')
+      const db = firebase.firestore()
+      const docRef = await db.collection('files').add({
+        name: file.name,
+        url: await fileRef.getDownloadURL()
+      })
 
-      try {
-        const docRef = await addDoc(fileCollection, {
-          fileName: file.name,
-          downloadURL: downloadURL, // 업로드된 파일의 다운로드 URL
-          timestamp: new Date()
-        })
-
-        // docRef.id를 이용하여 해당 문서의 ID를 얻을 수 있음
-        const documentId = docRef.id
-
-        // documentId를 사용하여 백엔드 API 호출
-        callBackendAPI(documentId)
-      } catch (error) {
-        console.error('Error adding document: ', error)
-      }
-    }
-
-    const callBackendAPI = async (documentId) => {
-      // 프론트엔드에서 백엔드 API 호출
-      try {
-        const response = await axios.post('13.209.77.71:8000/uploadfile', {
-          documentId: documentId
-        })
-
-        // API 호출 성공 시의 로직
-        console.log('Backend API response:', response.data)
-      } catch (error) {
-        // API 호출 실패 시의 로직
-        console.error('Error calling backend API: ', error)
-      }
-    }
-
-    return {
-      model,
-      uploadFile,
-      uploadUrl
+      // FastAPI 백엔드에 문서 ID 전달
+      await fetch('http://43.200.172.173:8000/uploadfile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ docId: docRef.id })
+      })
     }
   }
 }
