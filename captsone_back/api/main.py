@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, Form, UploadFile, File
+from fastapi import FastAPI, HTTPException, Form
+from fastapi.middleware.cors import CORSMiddleware
 from firebase_admin import initialize_app, credentials, firestore
 import requests
 import yara
@@ -13,6 +14,21 @@ firebase_app = initialize_app(cred)
 firestore_db = firestore.client()
 
 openai.api_key = "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"
+
+# CORS 설정 추가
+origins = [
+    "http://localhost",  # 로컬 개발 환경
+    "http://localhost:8080",  # 다른 포트의 로컬 개발 환경
+    , "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/analyze_document/")
 async def analyze_document(document_id: str = Form(...)):
