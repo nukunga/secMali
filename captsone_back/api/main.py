@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, Form, UploadFile, File
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from firebase_admin import initialize_app, credentials, firestore
 import requests
 import yara
@@ -14,8 +15,32 @@ firestore_db = firestore.client()
 
 openai.api_key = "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"
 
+# CORS 설정 추가
+origins = [
+    "http://localhost",  # 로컬 개발 환경
+    "http://localhost:8080",  # 다른 포트의 로컬 개발 환경
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.post("/analyze_document/")
-async def analyze_document(document_id: str = Form(...)):
+async def analyze_document(request: Request):
+    # JSON 형식으로부터 document_id 추출
+    data = await request.json()
+    document_id = data.get("document_id")
+
+    if not document_id:
+        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
+
+    if not document_id:
+        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
     # Firestore에서 다운로드 URL 가져오기
     document_ref = firestore_db.collection("fileUpload").document(document_id)
     document_data = document_ref.get().to_dict()
