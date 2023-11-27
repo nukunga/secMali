@@ -21,6 +21,7 @@
         bordered
         style="width: 600px; margin-top:100px; margin-bottom: 20px;"
         @added="uploadFile"
+        icon.onclick="location.href='loading'"
       />
     </div>
     <p style="text-align: center; font-size: medium;">Drag & drop file here <br>or browse file from device</p>
