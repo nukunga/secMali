@@ -4,12 +4,12 @@
         <div class="hero-banner">
     <div class="text-center preview-description">
         <h1>SecMali</h1>
-			<small style="font-style: oblique">Document Analysis Program</small>
+			  <small style="font-style: oblique">Document Analysis Program</small>
     </div>
 </div>
 <div id="wrap1">
     <div id='form_wrap'>
-      <form>
+      <form ref="formRef">
         <br>
         <div class="flex flex-center">
         <q-uploader
@@ -32,37 +32,49 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/storage'
-import 'firebase/firestore'
+import { defineComponent, ref } from 'vue';
+import { ref as firebaseStorageRef, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { api } from 'src/boot/axios';
+import { createFileDoc } from '../services/test'
+import { storage } from 'src/boot/firebase';
+import {v4} from "uuid"
 
-export default {
-  methods: {
-    async uploadFile () {
-      const file = this.$refs.uploader.queuedFiles[0]
-      if (!file) return
+export default defineComponent({
+  name: 'UploadPage',
+  setup() {
+    const formRef = ref();
+    const storageRef = firebaseStorageRef(storage, "files");
+    const fileModel = ref();
+    const uploadedFileUrl = ref();
 
-      // Firebase Storage에 파일 업로드
-      const storageRef = firebase.storage().ref()
-      const fileRef = storageRef.child(file.name)
-      await fileRef.put(file)
+    async function uploadFile() {
+      console.log(fileModel.value)
+      await uploadFileToStorage()
 
-      // Firebase Firestore에 파일 정보 저장
-      const db = firebase.firestore()
-      const docRef = await db.collection('files').add({
-        name: file.name,
-        url: await fileRef.getDownloadURL()
-      })
+      const res = await createFileDoc(uploadedFileUrl.value);
 
-      // FastAPI 백엔드에 문서 ID 전달
-      await fetch('http://43.200.172.173:8000/uploadfile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ docId: docRef.id })
+      api.post('http://43.201.179.16:8000/analyze_document', {document_id: res}).then((res) => {
+        console.log(res);
       })
     }
+
+    async function uploadFileToStorage() {
+      const fileRef = firebaseStorageRef(storageRef, fileModel.value.name + v4());
+      return uploadBytes(fileRef, fileModel.value).then((snapshot) => {
+         return getDownloadURL(snapshot.ref).then((url) => {
+          uploadedFileUrl.value = url;
+          return url
+        })
+      })
+    }
+
+    return {
+      formRef,
+      fileModel,
+      uploadFile,
+    }
   }
-}
+})
 </script>
 
 <style scoped>

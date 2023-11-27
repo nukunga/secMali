@@ -1,47 +1,70 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from firebase_admin import initialize_app, credentials, firestore
+import requests
 import yara
 import oletools.olevba
-import os
 import openai
-from firebase_admin import initialize_app, credentials, storage
+
+app = FastAPI()
 
 # Firebase 초기화
 cred = credentials.Certificate("/home/ubuntu/server/secmali-firebase-adminsdk-fu5bv-11cf4968bf.json")
-firebase_app = initialize_app(cred, options={
-    "storageBucket": "secmali.appspot.com"  
-})
-firebase_storage = storage.bucket()
+firebase_app = initialize_app(cred)
+firestore_db = firestore.client()
 
 openai.api_key = "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"
-app = FastAPI()
 
-@app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...), document_id: str = Form(...)):
-    # Firebase Storage에서 다운로드 URL 얻기
-    blob = firebase_storage.blob(f"uploads/{document_id}/{file.filename}")
-    try:
-        download_url = blob.generate_signed_url(expiration=3600)  # URL의 만료 시간은 1시간으로 설정
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to generate download URL: {str(e)}")
+# CORS 설정 추가
+origins = [
+    "http://localhost",  # 로컬 개발 환경
+    "http://localhost:8080",  # 다른 포트의 로컬 개발 환경
+    "*",
+]
 
-    # Firebase Storage에서 파일 다운로드
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post("/analyze_document/")
+async def analyze_document(request: Request):
+    # JSON 형식으로부터 document_id 추출
+    data = await request.json()
+    document_id = data.get("document_id")
+
+    if not document_id:
+        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
+
+    if not document_id:
+        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
+    # Firestore에서 다운로드 URL 가져오기
+    document_ref = firestore_db.collection("fileUpload").document(document_id)
+    document_data = document_ref.get().to_dict()
+
+    if not document_data or "download_url" not in document_data:
+        raise HTTPException(status_code=404, detail="Document not found or missing download_url")
+
+    download_url = document_data["download_url"]
+
+    # 파일 다운로드
     try:
-        file_contents = blob.download_as_text()  # 텍스트 파일의 경우
-        # 또는
-        # file_contents = blob.download_as_bytes()  # 바이너리 파일의 경우
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to download file from storage: {str(e)}")
+        response = requests.get(download_url)
+        response.raise_for_status()
+        file_contents = response.content
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Failed to download file: {str(e)}")
 
     # Yara를 사용하여 악성 문서 판별
     rules = yara.compile(filepath='rules/maldocs_index.yar')
     matches = rules.match(data=file_contents)
-
-    # 매칭된 룰의 이름 추출
     matched_rules = [match.rule for match in matches]
 
     # Olevba를 사용하여 매크로 추출
-    vba = oletools.olevba.VBA_Parser(file.file, data=file_contents)
+    vba = oletools.olevba.VBA_Parser(None, data=file_contents)
     macros = []
     if vba.detect_vba_macros():
         for (filename, stream_path, vba_filename, vba_code) in vba.extract_macros():
@@ -50,19 +73,25 @@ async def create_upload_file(file: UploadFile = File(...), document_id: str = Fo
                 "vba_filename": vba_filename,
                 "vba_code": vba_code
             })
+
+    # OpenAI GPT-3.5-turbo를 사용하여 매크로 분석
+    if macros:
         vba_codes = [macro["vba_code"] for macro in macros]
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a malicious macro code analyst."},
-                {"role": "user", "content": vba_codes[0] + "위의 코드가 어떤 행동을 하는지 일반인이 알아듣기 쉽게 말해줘"}
+                {"role": "user", "content": vba_codes + "위의 코드가 어떤 행동을 하는지 일반인이 알아듣기 쉽게 말해줘"}
             ]
         )
+        macro_analysis = completion.choices[0].message.content
+    else:
+        macro_analysis = "매크로가 발견되지 않았습니다."
 
     # 분석 결과 반환
     return {
-        "filename": file.filename,
+        "document_id": document_id,
         "matched_rules": matched_rules,
         "macros": macros,
-        "macro_analysis": completion.choices[0].message.content
+        "macro_analysis": macro_analysis
     }

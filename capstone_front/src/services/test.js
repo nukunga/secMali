@@ -1,5 +1,5 @@
 import { app, db } from "src/boot/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 const querySnapshot = await getDocs(collection(db, "test"));
 
@@ -16,4 +16,15 @@ export function testFunction() {
   });
 
   return testDocList
+}
+
+
+export async function createFileDoc(fileRef) {
+  try {
+    const docRef = await addDoc(collection(db, "fileUpload"), { download_url: fileRef });
+    return docRef.id;
+  } catch (e) {
+    console.error('Error creating file doc : ', e);
+    throw e;
+  }
 }
