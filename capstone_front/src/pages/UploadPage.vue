@@ -14,7 +14,7 @@
         <div class="flex flex-center">
         <q-uploader
         ref="uploader"
-        url="http://localhost:4444/upload"
+        url="https://secmali.web.app/#/"
         color="indigo-9"
         accept=".hwp, .doc, .xlsx"
         flat
@@ -23,7 +23,7 @@
         @added="uploadFile"
       />
     </div>
-    <p style="text-align: center; font-size: medium;"><b>Drag & drop</b> file here <br>or <b>browse file</b> from device</p>
+    <p style="text-align: center; font-size: medium;">Drag & drop file here <br>or browse file from device</p>
       </form>
     </div>
   </div>

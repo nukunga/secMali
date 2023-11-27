@@ -7,7 +7,7 @@
             <q-badge color="red" floating>1</q-badge>
           </q-btn>
           <div class="text-h4 q-mb-md font3">
-            <p class="color title"><b>파일 분석 완료!</b></p>
+            <p class="color title font3"><b>파일 분석 완료!</b></p>
           </div>
         </div>
         <div>
@@ -124,6 +124,7 @@
         </div>
         <div class="btn-con">
           <q-btn
+            onclick="location.href='#'"
             class="btn"
             text-color="white"
             style="font-weight: bold"
