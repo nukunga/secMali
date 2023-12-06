@@ -30,17 +30,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/analyze_document/")
-async def analyze_document(request: Request):
-    # JSON 형식으로부터 document_id 추출
-    data = await request.json()
-    document_id = data.get("document_id")
-
+@app.get("/analyze_document/{document_id}")
+async def analyze_document(request: Request, document_id: str):
     if not document_id:
-        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
+        raise HTTPException(status_code=422, detail="Missing document_id in the request path")
 
-    if not document_id:
-        raise HTTPException(status_code=422, detail="Missing document_id in the request body")
     # Firestore에서 다운로드 URL 가져오기
     document_ref = firestore_db.collection("fileUpload").document(document_id)
     document_data = document_ref.get().to_dict()
@@ -78,7 +72,7 @@ async def analyze_document(request: Request):
     if macros:
         vba_codes = [macro["vba_code"] for macro in macros]
         completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a malicious macro code analyst."},
                 {"role": "user", "content": vba_codes + "위의 코드가 어떤 행동을 하는지 일반인이 알아듣기 쉽게 말해줘"}
