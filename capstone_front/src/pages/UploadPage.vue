@@ -54,7 +54,7 @@ export default defineComponent({
 
       const res = await createFileDoc(uploadedFileUrl.value);
 
-      api.post('http://43.201.179.16:8000/analyze_document', {document_id: res}).then((res) => {
+      api.post(`http://43.201.179.16:8000/analyze_document?document_id=${res}`).then((res) => {
         console.log(res);
       })
     }
