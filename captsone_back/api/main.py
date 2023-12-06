@@ -71,13 +71,15 @@ async def analyze_document(request: Request, document_id: str):
     # OpenAI GPT-3.5-turbo를 사용하여 매크로 분석
     if macros:
         vba_codes = [macro["vba_code"] for macro in macros]
+        vba_codes_str = "\n".join(vba_codes)
         completion = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a malicious macro code analyst."},
-                {"role": "user", "content": vba_codes + "위의 코드가 어떤 행동을 하는지 일반인이 알아듣기 쉽게 말해줘"}
+                {"role": "user", "content": f"{vba_codes_str}위의 코드가 어떤 행동을 하는지 일반인이 알아듣기 쉽게 말해주고 위험한 파일인지 판별해줘"}
             ]
         )
+
         macro_analysis = completion.choices[0].message.content
     else:
         macro_analysis = "매크로가 발견되지 않았습니다."
