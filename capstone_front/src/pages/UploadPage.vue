@@ -21,7 +21,7 @@
         bordered
         style="width: 600px; margin-top:100px; margin-bottom: 20px;"
         @added="uploadFile"
-        icon.onclick="location.href='loading'"
+        icon.onclick="location.href='result'"
       />
     </div>
     <p style="text-align: center; font-size: medium;">Drag & drop file here <br>or browse file from device</p>
@@ -42,7 +42,7 @@ import {v4} from "uuid"
 
 export default defineComponent({
   name: 'UploadPage',
-  setup() {
+  setup(_, {router}) {
     const formRef = ref();
     const storageRef = firebaseStorageRef(storage, "files");
     const fileModel = ref();
@@ -54,8 +54,9 @@ export default defineComponent({
 
       const res = await createFileDoc(uploadedFileUrl.value);
 
-      api.post(`http://43.201.179.16:8000/analyze_document?document_id=${res}`).then((res) => {
+      api.get(`http://43.201.179.16:8000/analyze_document?document_id=${res}`).then((res) => {
         console.log(res);
+        router.push({ name: 'result', params: { data: res.data } });
       })
     }
 

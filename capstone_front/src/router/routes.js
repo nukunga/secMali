@@ -17,6 +17,11 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
-]
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
 export default routes
