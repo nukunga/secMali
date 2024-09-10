@@ -13,7 +13,7 @@ cred = credentials.Certificate("/home/ubuntu/server/secmali-firebase-adminsdk-fu
 firebase_app = initialize_app(cred)
 firestore_db = firestore.client()
 
-openai.api_key = "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"
+openai.api_key = ""
 
 # CORS 설정 추가
 origins = [
