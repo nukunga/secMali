@@ -9,7 +9,7 @@ import openai
 app = FastAPI()
 
 # Firebase 초기화
-cred = credentials.Certificate("/home/ubuntu/server/secmali-firebase-adminsdk-fu5bv-11cf4968bf.json")
+cred = credentials.Certificate("")
 firebase_app = initialize_app(cred)
 firestore_db = firestore.client()
 
